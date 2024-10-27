@@ -1,0 +1,85 @@
+import java.util.Scanner;
+
+public class FinancialProject {
+
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("\nPlease sign up");
+
+        System.out.println("\nEnter your username");
+        String userSign = input.nextLine();
+
+        System.out.println("\nEnter your password");
+        String passSign = input.nextLine();
+
+        UserDetails user = new UserDetails(userSign, passSign);
+        System.out.println("\nAccount created succesfuly");
+        System.out.println("\nUsername: " + user.getUsername() + " \nPassword: " + user.getPassword());
+
+        System.out.println("\nEnter your balance in the account");
+        double userBalance = input.nextDouble();
+        input.nextLine();
+        UserDetails user1 = new UserDetails(userBalance);
+        user1.setBalance(userBalance);
+
+        String userLog;
+        String passLog;
+        do {
+            System.out.println("\nPlease Login");
+            System.out.println("\nEnter your username");
+            userLog = input.nextLine();
+
+            System.out.println("\nEnter your password");
+            passLog = input.nextLine();
+
+            if ((userLog.equals(user.getUsername())) && (passLog.equals(user.getPassword()))) {
+                System.out.println("Succesfuly logged in");
+            } else {
+                System.out.println("Invalid username or password");
+            }
+
+        } while ((!userLog.equals(user.getUsername())) && (passLog.equals(user.getPassword())));
+
+        int choice;
+
+        do{
+            System.out.println("\nChoose one");
+            System.out.println("1.View Balance");
+            System.out.println("2.Deposit Money");
+            System.out.println("3.Withdraw Money");
+            System.out.println("4.Exit");
+            choice = input.nextInt();
+            
+            switch (choice) {
+                case 1:
+                    System.out.println("Your Balance:");
+                    System.out.println(user1.getBalance());
+                    break;
+                case 2:
+                    System.out.println("How much do you want to deposit?");
+                    double deposit = input.nextDouble();
+                    user1.setBalance(userBalance + deposit);
+                    System.out.println("\nYour new ammount");
+                    System.out.println(user1.getBalance());
+                    break;
+                case 3:
+                    System.out.println("How much money do you want to withdraw?");
+                    double withdraw = input.nextDouble();
+                    if(user1.getBalance()>=withdraw){
+                        user1.setBalance(userBalance-withdraw);
+                        System.out.println("Your new balance is "+user1.getBalance());
+                    }else{
+                        System.out.println("You do not have enough money in the account");
+                    }
+                    break;
+                case 4:
+                    System.out.println("Exiting...");
+                    break;
+                default:
+                    System.out.println("Enter a valid input");
+            }
+        }while(choice!=4);
+    }
+
+}
